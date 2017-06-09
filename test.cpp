@@ -15,5 +15,6 @@ int main()
       for(int i = 0; i < v.size(); i++)
         cout<<v.get<string>(i)<<endl;
    }
-   
+ 
+ return 0;
 }
