@@ -8,9 +8,11 @@
 #define CONFIG_H_H
 
 #include<iostream>
+#include "tc_singleton.h"
+using namespace taf;
 using namespace std;
 
-class Config
+class Config:public TC_Singleton<Config, CreateStatic, DefaultLifetime>
 {
 public:
 	int InitConfig(const string&asFile);

@@ -7,6 +7,7 @@
 
 #include <unistd.h> 
 #include <fstream> 
+#include "jsonxx.h"
 #include "Config.h"
 #include "easylogging++.h"
 
@@ -29,7 +30,7 @@ int Config::InitConfig(const string&asFile)
 
 	std::stringstream buffer;
 	buffer<<ifr.rdbuf();
-	buffer.str()>>csConfigData;
+	csConfigData = buffer.str();
 
 	return 0;
 }
@@ -39,9 +40,9 @@ string Config::getFieldValue(const string&asField)
 	string lsRet;
 	jsonxx::Object obj;
 	obj.parse(csConfigData);
-	if( obj.has<String>(asField))
+	if( obj.has<jsonxx::String>(asField))
 	{
-		lsRet = obj.get<String>(asField);
+		lsRet = obj.get<jsonxx::String>(asField);
 	}
 
 	return lsRet;
@@ -53,9 +54,9 @@ vector<string> Config::getFieldArray(const string&asField)
 
 	jsonxx::Object obj;
 	obj.parse(csConfigData);
-	if(obj.has<Array>(asField))
+	if(obj.has<jsonxx::Array>(asField))
 	{
-		Array v = obj.get<Array>(asField);
+		jsonxx::Array v = obj.get<jsonxx::Array>(asField);
 		for(int i = 0; i < v.size(); i++)
 			lVecRet.push_back(v.get<string>(i));
 	}
